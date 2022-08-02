@@ -740,7 +740,7 @@
         "type": "DotVVM.Framework.Controls.ValidatorPlacement, DotVVM.Framework"
       },
       "ValueBinding": {
-        "type": "DotVVM.Framework.Binding.Expressions.IValueBinding, DotVVM.Framework",
+        "type": "DotVVM.Framework.Binding.Expressions.IStaticValueBinding, DotVVM.Framework",
         "required": true
       }
     },
