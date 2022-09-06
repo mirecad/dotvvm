@@ -55,7 +55,7 @@
 				<ul data-bind="foreach: { data: $parent.Products()?.Items }" id="Products__input">
 					<li>
 						<label class="form-check-label">
-							<input class="form-check-input" data-bind="dotvvm-checkedItems: $parent.Products, checkedArrayContainsObservables: true, dotvvm-checkbox-updateAfterPostback: true, dotvvm-checked-pointer: 'dotvvm-checkedItems', checkedValue: Value" type="checkbox">
+							<input class="form-check-input" data-bind="dotvvm-checkedItems: $parents[1].Products, checkedArrayContainsObservables: true, dotvvm-checkbox-updateAfterPostback: true, dotvvm-checked-pointer: 'dotvvm-checkedItems', checkedValue: Value" type="checkbox">
 							<span data-bind="text: DisplayName"></span>
 						</label>
 					</li>

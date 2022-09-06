@@ -29,7 +29,7 @@
 						<ul data-bind="foreach: { data: $parent.Countries()?.Items }" id="CountryId__input">
 							<li>
 								<label>
-									<input data-bind="dotvvm-checkedItems: $parent.CountryId, checkedArrayContainsObservables: true, dotvvm-checkbox-updateAfterPostback: true, dotvvm-checked-pointer: 'dotvvm-checkedItems', checkedValue: Value" type="checkbox">
+									<input data-bind="dotvvm-checkedItems: $parents[1].CountryId, checkedArrayContainsObservables: true, dotvvm-checkbox-updateAfterPostback: true, dotvvm-checked-pointer: 'dotvvm-checkedItems', checkedValue: Value" type="checkbox">
 									<span data-bind="text: DisplayName"></span>
 								</label>
 							</li>

@@ -88,16 +88,22 @@ namespace DotVVM.Framework.Binding
             foreach (var a in control.GetAllAncestors(includingThis: true))
             {
                 var ancestorContext = a.GetDataContextType(inherit: false);
-                if (bindingContext.Equals(ancestorContext))
-                    return (changes, a);
 
-                if (ancestorContext is { ServerSideOnly: false } && !ancestorContext.Equals(lastAncestorContext))
+                if (ancestorContext is null)
+                    continue;
+
+                if (!ancestorContext.ServerSideOnly &&
+                    !ancestorContext.Equals(lastAncestorContext))
                 {
                     // only count changes which are visible client-side
                     // server-side context are not present in the client-side stack at all, so we need to skip them here
                     changes++;
                     lastAncestorContext = ancestorContext;
                 }
+
+                if (bindingContext.Equals(ancestorContext))
+                    return (changes, a);
+
             }
 
             // try to get the real objects, to see which is wrong
@@ -357,9 +363,9 @@ namespace DotVVM.Framework.Binding
             control.SetDataContextType(dataSourceBinding.GetProperty<CollectionElementDataContextBindingProperty>().DataContext);
 
         /// <summary> Return the expected data context type for this property. Returns null if the type is unknown. </summary>
-        public static DataContextStack? GetDataContextType(this DotvvmProperty property, DotvvmBindableObject obj)
+        public static DataContextStack? GetDataContextType(this DotvvmProperty property, DotvvmBindableObject obj, DataContextStack? objDataContext = null)
         {
-            var dataContextType = obj.GetDataContextType();
+            var dataContextType = objDataContext ?? obj.GetDataContextType();
 
             if (dataContextType == null)
             {
@@ -383,9 +389,9 @@ namespace DotVVM.Framework.Binding
         }
 
         /// <summary> Return the expected data context type for this property. Returns null if the type is unknown. </summary>
-        public static DataContextStack GetDataContextType(this DotvvmProperty property, ResolvedControl obj)
+        public static DataContextStack GetDataContextType(this DotvvmProperty property, ResolvedControl obj, DataContextStack? objDataContext = null)
         {
-            var dataContextType = obj.DataContextTypeStack;
+            var dataContextType = objDataContext ?? obj.DataContextTypeStack;
 
             if (property.DataContextManipulationAttribute != null)
             {
