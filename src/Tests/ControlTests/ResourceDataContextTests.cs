@@ -95,8 +95,6 @@ namespace DotVVM.Framework.Tests.ControlTests
                         <span class=name data-id={resource: Id}>{{resource: Name}}</span>
 
                         <span>{{value: _parent.CommandData}}</span>
-
-                        <dot:Button Click={command: _root.TestMethod(Name)} />
                     </dot:Repeater>
                "
             );
