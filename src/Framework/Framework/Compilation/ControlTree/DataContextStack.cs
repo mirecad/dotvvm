@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -106,6 +106,21 @@ namespace DotVVM.Framework.Compilation.ControlTree
                 yield return c.DataContextType;
                 c = c.Parent;
             }
+        }
+
+        public bool IsAncestorOf(DataContextStack x)
+        {
+            var c = x.Parent;
+            while (c != null)
+            {
+                if (this.hashCode == c.hashCode)
+                {
+                    if (this.Equals(c))
+                        return true;
+                }
+                c = c.Parent;
+            }
+            return false;
         }
 
         ITypeDescriptor IDataContextStack.DataContextType => new ResolvedTypeDescriptor(DataContextType);
