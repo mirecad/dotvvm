@@ -1032,6 +1032,21 @@ namespace DotVVM.Framework.Tests.Binding
         {
             Assert.AreEqual(-1025, ExecuteBinding("var intVariable = ~IntProp; intVariable", new TestViewModel { IntProp = 1024 }));
         }
+        [DataTestMethod]
+        [DataRow("IntProp + 1L", 101L)]
+        [DataRow("1L + IntProp", 101L)]
+        [DataRow("1L + UIntProp", 3_000_000_001L)]
+        [DataRow("1 + UIntProp", (uint)3_000_000_001)]
+        [DataRow("ShortProp", short.MaxValue)]
+        [DataRow("ShortProp - 1", short.MaxValue - 1)]
+        [DataRow("DoubleProp - 1", 0.5)]
+        [DataRow("DoubleProp + ShortProp", short.MaxValue + 1.5)]
+        [DataRow("NullableDoubleProp + ShortProp", null)]
+        public void BindingCompiler_OperatorType(string expr, object expectedResult)
+        {
+            var vm = new TestViewModel { IntProp = 100, DoubleProp = 1.5 };
+            Assert.AreEqual(expectedResult, ExecuteBinding(expr, vm));
+        }
     }
     class TestViewModel
     {
@@ -1066,6 +1081,12 @@ namespace DotVVM.Framework.Tests.Binding
         public TestViewModel2[] VmArray => new TestViewModel2[] { new TestViewModel2() };
         public int[] IntArray { get; set; }
         public decimal DecimalProp { get; set; }
+        public byte ByteProp { get; set; } = 255;
+        public sbyte SByteProp { get; set; } = 127;
+        public short ShortProp { get; set; } = 32767;
+        public ushort UShortProp { get; set; } = 65535;
+        public uint UIntProp { get; set; } = 3_000_000_000;
+        public double? NullableDoubleProp { get; set; }
 
         public string SetStringProp(string a, int b)
         {
