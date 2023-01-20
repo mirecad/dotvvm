@@ -11,6 +11,12 @@ namespace DotVVM.Framework.Compilation.Javascript
         {
             return GetMethodFromExpression((Expression)expression);
         }
+
+        public static MethodBase GetMethodFromExpression(Expression<Action> expression)
+        {
+            return GetMethodFromExpression((Expression)expression);
+        }
+
         static MethodBase GetMethodFromExpression(Expression expression)
         {
             var originalExpression = expression;
